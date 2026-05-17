@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A pink love story page for Betty, Liz Favee, Elizabeth.">
+  <title>For Betty | Liz Favee</title>
+  <style>
+    /* Theme notes: these colors control the whole page so the pink look stays easy to adjust later. */
+    :root {
+      --rose-950: #4c0f25;
+      --rose-900: #74133c;
+      --rose-700: #b91e63;
+      --rose-500: #ec4b91;
+      --rose-300: #ff9eca;
+      --rose-100: #ffe6f1;
+      --cream: #fff8fb;
+      --white: #ffffff;
+      --ink: #371827;
+      --muted: #7b5265;
+      --shadow: 0 24px 70px rgba(116, 19, 60, 0.24);
+    }
+
+    /* Base reset keeps the layout predictable across phones, laptops, and GitHub Pages. */
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(255, 158, 202, 0.45), transparent 28rem),
+        linear-gradient(180deg, #fff1f7 0%, #fff8fb 42%, #ffeaf3 100%);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* Header note: the nav is intentionally simple so the love story is the first thing people feel. */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px min(6vw, 72px);
+      color: var(--white);
+      background: rgba(76, 15, 37, 0.86);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .brand {
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .nav {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav a {
+      color: #ffe6f1;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+
+    /* Hero note: this gives Betty a full first-screen moment, not just a small heading. */
+    .hero {
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 80px min(6vw, 72px) 72px;
+      color: var(--white);
+      background:
+        linear-gradient(120deg, rgba(76, 15, 37, 0.94), rgba(185, 30, 99, 0.72)),
+        url("images/img1.jpg") center/cover;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 34%;
+      background: linear-gradient(0deg, rgba(76, 15, 37, 0.8), transparent);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: min(100%, 900px);
+      max-width: 900px;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: #ffd4e8;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(3.2rem, 10vw, 8rem);
+      line-height: 0.92;
+      letter-spacing: 0;
+    }
+
+    .hero-name {
+      display: block;
+      color: #ffe6f1;
+      text-shadow: 0 12px 40px rgba(76, 15, 37, 0.55);
+    }
+
+    .lead {
+      max-width: 720px;
+      margin: 24px 0 0;
+      color: #fff4f9;
+      font-size: clamp(1.08rem, 2.4vw, 1.38rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 20px;
+      border-radius: 8px;
+      color: var(--rose-950);
+      background: var(--white);
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 12px 30px rgba(76, 15, 37, 0.22);
+    }
+
+    .button.secondary {
+      color: var(--white);
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.34);
+      box-shadow: none;
+    }
+
+    /* Floating hearts are CSS-only decoration, so no extra image files are needed. */
+    .heart-field {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .heart {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      transform: rotate(45deg);
+      background: rgba(255, 230, 241, 0.55);
+      animation: floatHeart 9s linear infinite;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: inherit;
+    }
+
+    .heart::before {
+      left: -9px;
+    }
+
+    .heart::after {
+      top: -9px;
+    }
+
+    .heart:nth-child(1) {
+      left: 12%;
+      bottom: -40px;
+      animation-delay: 0s;
+    }
+
+    .heart:nth-child(2) {
+      left: 34%;
+      bottom: -80px;
+      animation-delay: 2s;
+      width: 14px;
+      height: 14px;
+    }
+
+    .heart:nth-child(3) {
+      left: 62%;
+      bottom: -60px;
+      animation-delay: 4s;
+    }
+
+    .heart:nth-child(4) {
+      left: 82%;
+      bottom: -90px;
+      animation-delay: 1s;
+      width: 12px;
+      height: 12px;
+    }
+
+    @keyframes floatHeart {
+      0% {
+        transform: translateY(0) rotate(45deg);
+        opacity: 0;
+      }
+      12% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-105vh) rotate(45deg);
+        opacity: 0;
+      }
+    }
+
+    main {
+      width: min(1120px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    /* Section note: every section uses breathing room instead of crowded cards. */
+    section {
+      padding: 72px 0;
+    }
+
+    .section-title {
+      max-width: 760px;
+      margin-bottom: 28px;
+    }
+
+    .section-title p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    h2 {
+      margin: 0;
+      color: var(--rose-950);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      color: var(--rose-900);
+      font-size: 1.22rem;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0 0 16px;
+    }
+
+    /* Letter note: this is the emotional center of the page. */
+    .letter {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .portrait-card,
+    .letter-card {
+      border-radius: 8px;
+      background: var(--white);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .portrait-card img {
+      width: 100%;
+      height: 100%;
+      min-height: 460px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .letter-card {
+      padding: clamp(24px, 5vw, 44px);
+      border: 1px solid rgba(185, 30, 99, 0.12);
+    }
+
+    .letter-card .signature {
+      margin-top: 24px;
+      color: var(--rose-700);
+      font-weight: 800;
+      font-size: 1.12rem;
+    }
+
+    /* Timeline note: this keeps your real dates visible and easy to update. */
+    .timeline {
+      display: grid;
+      gap: 16px;
+      position: relative;
+    }
+
+    .memory {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 18px;
+      padding: 22px;
+      border: 1px solid rgba(185, 30, 99, 0.15);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: 0 14px 40px rgba(116, 19, 60, 0.08);
+    }
+
+    .memory time {
+      color: var(--rose-700);
+      font-weight: 900;
+    }
+
+    .memory p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    /* Promise note: short lines make this part feel personal without becoming too heavy. */
+    .promises {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .promise {
+      padding: 22px;
+      min-height: 180px;
+      border-radius: 8px;
+      color: var(--white);
+      background: linear-gradient(145deg, var(--rose-900), var(--rose-500));
+      box-shadow: 0 18px 48px rgba(185, 30, 99, 0.22);
+    }
+
+    .promise p {
+      margin: 0;
+      color: #fff4f9;
+    }
+
+    /* Gallery note: JavaScript fills this grid with img1.jpg through img20.jpg and hides missing files. */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .photo {
+      border: 0;
+      padding: 0;
+      min-height: 230px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #ffd4e8;
+      box-shadow: 0 14px 32px rgba(116, 19, 60, 0.12);
+      cursor: pointer;
+    }
+
+    .photo img {
+      width: 100%;
+      height: 100%;
+      min-height: 230px;
+      display: block;
+      object-fit: cover;
+      transition: transform 260ms ease;
+    }
+
+    .photo:hover img,
+    .photo:focus-visible img {
+      transform: scale(1.05);
+    }
+
+    /* Closing note: the final band gives the page a memorable ending. */
+    .closing {
+      margin-bottom: 64px;
+      padding: clamp(28px, 6vw, 56px);
+      border-radius: 8px;
+      color: var(--white);
+      background:
+        linear-gradient(135deg, rgba(76, 15, 37, 0.94), rgba(236, 75, 145, 0.88)),
+        url("images/img2.jpg") center/cover;
+      box-shadow: var(--shadow);
+    }
+
+    .closing h2 {
+      color: var(--white);
+    }
+
+    .closing p {
+      max-width: 760px;
+      color: #fff4f9;
+      font-size: 1.08rem;
+    }
+
+    footer {
+      padding: 28px 18px 42px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* Lightbox note: this is the full-screen photo viewer for gallery clicks. */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      place-items: center;
+      padding: 22px;
+      background: rgba(31, 7, 19, 0.9);
+    }
+
+    .lightbox.is-open {
+      display: grid;
+    }
+
+    .lightbox img {
+      max-width: min(100%, 1040px);
+      max-height: 82vh;
+      border-radius: 8px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+    }
+
+    .lightbox button {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 44px;
+      height: 44px;
+      border: 0;
+      border-radius: 50%;
+      color: var(--rose-950);
+      background: var(--white);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 900px) {
+      .letter,
+      .promises {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 620px) {
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      /* Mobile hero note: keep every hero line inside narrow phones without losing the big romantic feel. */
+      .hero {
+        min-height: 86vh;
+        padding-top: 56px;
+        padding-right: 28px;
+        padding-left: 28px;
+        max-width: 100vw;
+      }
+
+      .hero-content {
+        width: min(100%, 334px);
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .eyebrow,
+      .lead {
+        max-width: 100%;
+        overflow-wrap: break-word;
+        white-space: normal;
+      }
+
+      .lead {
+        font-size: 1rem;
+      }
+
+      h1 {
+        max-width: 100%;
+        font-size: clamp(2.7rem, 14vw, 4.1rem);
+        overflow-wrap: break-word;
+      }
+
+      .hero-actions,
+      .button {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .memory {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .portrait-card img {
+        min-height: 340px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">For Betty - Liz Favee</div>
+    <nav class="nav" aria-label="Page sections">
+      <a href="#letter">Letter</a>
+      <a href="#memories">Memories</a>
+      <a href="#gallery">Photos</a>
+      <a href="#forever">Forever</a>
+    </nav>
+  </header>
+
+  <section class="hero" aria-label="Love letter hero">
+    <div class="heart-field" aria-hidden="true">
+      <span class="heart"></span>
+      <span class="heart"></span>
+      <span class="heart"></span>
+      <span class="heart"></span>
+    </div>
+    <div class="hero-content">
+      <p class="eyebrow">A little website for the woman I love</p>
+      <h1><span class="hero-name">Betty</span> Liz Favee</h1>
+      <p class="lead">Elizabeth, Bby, this is for you. For the years, the visits, the compliments, the distance, the tears, the forgiveness, and the love that still keeps choosing you.</p>
+      <div class="hero-actions">
+        <a class="button" href="#letter">Read My Heart</a>
+        <a class="button secondary" href="#gallery">See Our Memories</a>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <!-- Love letter note: this section carries the real emotional story before the timeline expands it. -->
+    <section id="letter" class="letter" aria-label="Personal letter">
+      <div class="portrait-card">
+        <img src="images/img3.jpg" alt="A beautiful memory of Betty">
+      </div>
+      <article class="letter-card">
+        <div class="section-title">
+          <h2>Dear Elizabeth</h2>
+          <p>Some people arrive quietly, then become impossible to forget.</p>
+        </div>
+        <p>Betty, my Liz Favee, my Bby, I may not always have the perfect words, but I know what my heart has been saying for years. You became more than a girl I liked. You became home, peace, trouble, laughter, prayer, and the one name my heart keeps running back to.</p>
+        <p>We first crossed paths in 2019. We were not close then, but maybe life was already saving a place for us. In August 2021, friendship started to grow. Then October came, and your affection became louder in the sweetest way. You visited often, complimented me when I needed it most, and made me feel seen at a time when that meant everything.</p>
+        <p>On October 21, 2021, around 6am while I was going to school, I finally told you I loved you. It was not just a random feeling. It had been building through your visits, your words, your care, and the way you looked out for me.</p>
+        <p>Our story has not been perfect. We have had distance, silence, pain, lessons, forgiveness, and moments that tested us. But even after everything, I still see you with love. I changed. I stopped being just a boy. I learned that mistakes should teach us, not become weapons we keep using against each other.</p>
+        <p>You are Elizabeth. You are Betty. You are Liz Favee. You are shy sometimes, you laugh a lot, and sometimes you are boring in the cutest way, so I cheer you up. To me, you are still the person I can open up to, explain my future to, and trust with the secrets I do not give everyone.</p>
+        <p class="signature">I still love you. You have always been my person.</p>
+      </article>
+    </section>
+
+    <!-- Timeline note: each memory is public-safe but still specific to your relationship. -->
+    <section id="memories" aria-label="Relationship memories">
+      <div class="section-title">
+        <h2>Our Story</h2>
+        <p>A deeper timeline of the love that started softly, survived distance, and kept finding its way back.</p>
+      </div>
+      <div class="timeline">
+        <article class="memory">
+          <time>2019</time>
+          <div>
+            <h3>When Life First Put You Near Me</h3>
+            <p>We met, but we were not friends yet. Still, that first chapter matters because it was the quiet beginning of everything that came later.</p>
+          </div>
+        </article>
+        <article class="memory">
+          <time>August 2021</time>
+          <div>
+            <h3>Friendship Started</h3>
+            <p>Somewhere in that season, the distance became smaller. We started knowing each other properly, and the story became warmer, softer, and harder to ignore.</p>
+          </div>
+        </article>
+        <article class="memory">
+          <time>October 21, 2021</time>
+          <div>
+            <h3>The Morning I Said It</h3>
+            <p>At around 6am, while I was going to school, I told you I loved you. Your visits, compliments, affection, and attention had already made my heart sure.</p>
+          </div>
+        </article>
+        <article class="memory">
+          <time>Sweet Days</time>
+          <div>
+            <h3>Kisses And Care</h3>
+            <p>We kissed a lot, laughed in our own way, and you even sacrificed your school time one day just to look out for me. I still carry that memory softly.</p>
+          </div>
+        </article>
+        <article class="memory">
+          <time>Mombasa Distance</time>
+          <div>
+            <h3>Missing You From Far</h3>
+            <p>When I came to Mombasa and left you back in our hometown, the distance was heavy. Some nights I cried because I missed you that much.</p>
+          </div>
+        </article>
+        <article class="memory">
+          <time>After The Storms</time>
+          <div>
+            <h3>We Learned To Return</h3>
+            <p>We had moments that broke us and moments that tested us. Still, we learned, forgave, and found our way back because love kept leaving a door open.</p>
+          </div>
+        </article>
+        <article class="memory">
+          <time>Forever Wish</time>
+          <div>
+            <h3>Family Around Us</h3>
+            <p>When I imagine the future, I see marriage with family around us, love becoming calmer, and both of us choosing peace on purpose.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Promise note: these cards turn the story into clear intentions for the future. -->
+    <section aria-label="Promises">
+      <div class="section-title">
+        <h2>What My Heart Wants You To Know</h2>
+        <p>Serious promises, said simply and honestly.</p>
+      </div>
+      <div class="promises">
+        <article class="promise">
+          <h3>I Changed For Better</h3>
+          <p>I stopped being just a boy. I want to love with maturity, honesty, patience, and actions that show I learned from every mistake.</p>
+        </article>
+        <article class="promise">
+          <h3>I Choose Forgiveness</h3>
+          <p>Our mistakes are lessons, not stones to throw forever. I want us to forgive each other and protect the love we still believe in.</p>
+        </article>
+        <article class="promise">
+          <h3>I Want Our Forever</h3>
+          <p>I want the kind of future where family is around us, peace is inside us, and love is something we commit to every day.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="gallery" aria-label="Photo gallery">
+      <div class="section-title">
+        <h2>Memories In Pictures</h2>
+        <p>Photos of Betty, moments of Liz Favee, and pieces of the story I keep close.</p>
+      </div>
+      <div class="gallery" id="galleryGrid"></div>
+    </section>
+
+    <!-- Closing note: this final message should feel like the words she remembers after leaving the page. -->
+    <section id="forever" class="closing" aria-label="Closing love message">
+      <h2>Elizabeth, You Are Loved</h2>
+      <p>I made this page because love deserves a place to breathe. Not a perfect story, not a fake one, but a real one. A story with attraction, affection, kisses, distance, tears, forgiveness, hope, and the kind of feeling that refuses to disappear.</p>
+      <p>Betty, I miss the simple things most: vibing with you, explaining my thoughts, talking about my future, opening up, and telling you the secrets I only trust you with.</p>
+      <p>Bby, I still love you. You are mine in my heart, and you have always been my person.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Made with love for Betty, Liz Favee, Elizabeth.</p>
+  </footer>
+
+  <div class="lightbox" id="lightbox" aria-label="Photo preview" aria-hidden="true">
+    <button type="button" id="closeLightbox" aria-label="Close photo preview">x</button>
+    <img id="lightboxImage" src="images/img1.jpg" alt="Selected memory">
+  </div>
+
+  <script>
+    /* Gallery note: set this to 20 now so future img16.jpg to img20.jpg files appear automatically. */
+    const maxGalleryImages = 20;
+    const galleryGrid = document.getElementById("galleryGrid");
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImage = document.getElementById("lightboxImage");
+    const closeLightbox = document.getElementById("closeLightbox");
+
+    /* Existence check note: this avoids empty cards for img16.jpg to img20.jpg until those files exist. */
+    async function imageExists(imagePath) {
+      try {
+        const response = await fetch(imagePath, { method: "HEAD" });
+        return response.ok;
+      } catch (error) {
+        return true;
+      }
+    }
+
+    /* Photo builder note: missing files are skipped, so the page stays clean while only 15 photos exist. */
+    async function buildGallery() {
+      for (let imageNumber = 1; imageNumber <= maxGalleryImages; imageNumber += 1) {
+        const button = document.createElement("button");
+        const image = document.createElement("img");
+        const imagePath = `images/img${imageNumber}.jpg`;
+
+        if (!(await imageExists(imagePath))) {
+          continue;
+        }
+
+        button.className = "photo";
+        button.type = "button";
+        button.setAttribute("aria-label", `Open memory photo ${imageNumber}`);
+
+        image.alt = `Memory photo ${imageNumber} of Betty`;
+        image.loading = imageNumber <= 4 ? "eager" : "lazy";
+
+        image.addEventListener("error", () => {
+          button.remove();
+        });
+
+        button.addEventListener("click", () => {
+          lightboxImage.src = imagePath;
+          lightbox.classList.add("is-open");
+          lightbox.setAttribute("aria-hidden", "false");
+        });
+
+        button.appendChild(image);
+        galleryGrid.appendChild(button);
+        image.src = imagePath;
+      }
+    }
+
+    buildGallery();
+
+    /* Lightbox note: closing works by button, background click, or Escape for a nicer phone and desktop feel. */
+    function closePhotoPreview() {
+      lightbox.classList.remove("is-open");
+      lightbox.setAttribute("aria-hidden", "true");
+    }
+
+    closeLightbox.addEventListener("click", closePhotoPreview);
+
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) {
+        closePhotoPreview();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closePhotoPreview();
+      }
+    });
+  </script>
+</body>
+</html>
